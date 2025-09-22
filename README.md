@@ -1,4 +1,4 @@
-# Private Health Data Analytics (FHE demo)
+# Private Data Analytics (FHE demo)
 
 This repository demonstrates a privacy‑preserving content/health‑data analytics flow. Data is encrypted on the client, sent to the server, analyzed, and the result is returned encrypted. It includes a minimal frontend, a full React frontend, and a Node.js/Express backend with optional Zama Relayer integration.
 
