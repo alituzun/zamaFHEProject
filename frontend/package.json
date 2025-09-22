@@ -1,0 +1,11 @@
+{
+  "name": "health-fhe-frontend",
+  "version": "1.0.0",
+  "main": "App.jsx",
+  "scripts": {
+    "start": "npx serve ."
+  },
+  "dependencies": {
+    "@zama-fhe/relayer-sdk": "*"
+  }
+}

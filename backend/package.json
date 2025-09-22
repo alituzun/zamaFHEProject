@@ -1,0 +1,19 @@
+{
+  "name": "health-fhe-backend",
+  "version": "1.0.0",
+  "main": "app.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "cross-env RELAYER_ENDPOINT=https://relayer.sepolia.zama.ai node app.js",
+    "dev": "cross-env RELAYER_ENDPOINT=https://relayer.sepolia.zama.ai nodemon app.js"
+  },
+  "dependencies": {
+    "@zama-fhe/relayer-sdk": "^0.2.0",
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0",
+    "cross-env": "^7.0.3"
+  }
+}
