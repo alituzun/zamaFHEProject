@@ -1,7 +1,12 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import './App.css';
-const API_BASE = process.env.REACT_APP_API_BASE || 'http://localhost:3001';
+// Auto-detect API base: use same-origin in prod; in CRA dev (port 3000) target backend at 3001
+const API_BASE = process.env.REACT_APP_API_BASE || (
+  typeof window !== 'undefined' && window.location && window.location.port === '3000'
+    ? 'http://localhost:3001'
+    : ''
+);
 // Mock encryption helpers (UTF-8 safe base64)
 function encryptData(data) {
   // Accepts string or ArrayBuffer/Uint8Array and returns base64
