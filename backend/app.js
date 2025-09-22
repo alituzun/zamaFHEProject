@@ -4,7 +4,9 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 app.use(express.json());
-app.use(cors({ origin: 'http://localhost:3000' }));
+// Allow configuring CORS origins via env (comma-separated); default to localhost
+const corsOrigin = process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : 'http://localhost:3000';
+app.use(cors({ origin: corsOrigin }));
 
 app.get('/health', (req, res) => {
   res.json({ ok: true });
@@ -307,8 +309,13 @@ app.post('/api/add', async (req, res) => {
   res.json({ result: enc });
 });
 
-app.listen(PORT, () => {
-  console.log(`Backend running on port ${PORT}`);
-  const s = getRelayerStatus();
-  console.log(`[Relayer] available=${s.available} endpoint=${s.endpoint}${s.initError ? ` error=${s.initError}` : ''}`);
-});
+// If running on Vercel (serverless), export the app; otherwise start a local server
+if (process.env.VERCEL) {
+  module.exports = app;
+} else {
+  app.listen(PORT, () => {
+    console.log(`Backend running on port ${PORT}`);
+    const s = getRelayerStatus();
+    console.log(`[Relayer] available=${s.available} endpoint=${s.endpoint}${s.initError ? ` error=${s.initError}` : ''}`);
+  });
+}

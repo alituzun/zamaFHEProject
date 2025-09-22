@@ -112,3 +112,34 @@ $env:REACT_APP_API_BASE="http://localhost:3001"; npm start
 
 - The demo uses base64 as a stand‑in for client‑side encryption. Replace with real FHE using Zama for production use.
 - Do not commit real private keys. The sample keys in the demo are placeholders only.
+
+## Deploying on Vercel
+
+This repo is configured for a one‑click deploy on Vercel using `vercel.json`:
+
+- Backend runs as a serverless function from `backend/app.js` at `/api/*`
+- React frontend is built from `react-frontend/` and served statically
+
+Steps
+
+1) Create a Vercel project and link this GitHub repo.
+2) In Vercel Project Settings → Environment Variables, set as needed:
+	- `RELAYER_ENDPOINT` (optional) — e.g., https://relayer.sepolia.zama.ai
+	- `CORS_ORIGIN` (optional) — comma‑separated origins that may call the API (defaults to http://localhost:3000 for local dev). For same‑origin production with Vercel, you can omit this.
+3) Trigger a deploy (push to main or use Deploy button).
+
+Routing
+
+- API: `https://<your-app>.vercel.app/api/...` → `backend/app.js` (Express exported app)
+- Frontend: `https://<your-app>.vercel.app/` → built React app
+
+Local preview with Vercel CLI (optional)
+
+```powershell
+npm i -g vercel
+vercel login
+vercel link
+vercel dev
+```
+
+When running `vercel dev`, the serverless function is simulated locally, and the React app is built/served automatically according to `vercel.json`.
