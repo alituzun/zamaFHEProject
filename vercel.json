@@ -9,7 +9,14 @@
     { "src": "/relayer-status", "dest": "/backend/app.js" },
     { "src": "/relayer-selfcheck", "dest": "/backend/app.js" },
     { "src": "/health", "dest": "/backend/app.js" },
-    { "handle": "filesystem" },
-    { "src": "/(.*)", "dest": "/index.html" }
+    { "src": "/static/(.*)", "dest": "/react-frontend/static/$1" },
+    { "src": "/favicon.ico", "dest": "/react-frontend/favicon.ico" },
+    { "src": "/asset-manifest.json", "dest": "/react-frontend/asset-manifest.json" },
+    { "src": "/manifest.json", "dest": "/react-frontend/manifest.json" },
+    { "src": "/logo192.png", "dest": "/react-frontend/logo192.png" },
+    { "src": "/logo512.png", "dest": "/react-frontend/logo512.png" },
+    { "src": "/robots.txt", "dest": "/react-frontend/robots.txt" },
+    { "src": "/", "dest": "/react-frontend/index.html" },
+    { "src": "/(.*)", "dest": "/react-frontend/index.html" }
   ]
 }
