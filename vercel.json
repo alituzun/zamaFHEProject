@@ -6,6 +6,9 @@
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "/backend/app.js" },
+    { "src": "/relayer-status", "dest": "/backend/app.js" },
+    { "src": "/relayer-selfcheck", "dest": "/backend/app.js" },
+    { "src": "/health", "dest": "/backend/app.js" },
     { "src": "/(.*)", "dest": "/react-frontend/build/$1" }
   ]
 }

@@ -8,9 +8,9 @@ app.use(express.json());
 const corsOrigin = process.env.CORS_ORIGIN ? process.env.CORS_ORIGIN.split(',') : 'http://localhost:3000';
 app.use(cors({ origin: corsOrigin }));
 
-app.get('/health', (req, res) => {
-  res.json({ ok: true });
-});
+const healthHandler = (req, res) => res.json({ ok: true });
+app.get('/health', healthHandler);
+app.get('/api/health', healthHandler);
 
 const { encryptData, decryptData } = require('./fhe-demo');
 const { encryptWithRelayer, decryptWithRelayer, getRelayerStatus, ensureRelayer } = require('./fhe-relayer');
@@ -24,14 +24,16 @@ const wantsRelayer = (req) => {
 };
 
 // Relayer availability status (so frontend can show a badge)
-app.get('/relayer-status', async (req, res) => {
+const relayerStatusHandler = async (req, res) => {
   await ensureRelayer();
   const s = getRelayerStatus();
   res.json({ relayerAvailable: s.available, relayerEndpoint: s.endpoint, relayerInitError: s.initError, moduleLoaded: s.moduleLoaded });
-});
+};
+app.get('/relayer-status', relayerStatusHandler);
+app.get('/api/relayer-status', relayerStatusHandler);
 
 // Verify provided keys can round-trip a small payload using Relayer
-app.post('/relayer-selfcheck', async (req, res) => {
+const relayerSelfcheckHandler = async (req, res) => {
   if (!relayerAvailable) return res.status(503).json({ ok: false, error: 'Relayer unavailable' });
   const pub = req.headers['x-public-key'];
   const prv = req.headers['x-private-key'];
@@ -45,7 +47,9 @@ app.post('/relayer-selfcheck', async (req, res) => {
   } catch (e) {
     return res.status(500).json({ ok: false, error: 'Relayer roundtrip failed' });
   }
-});
+};
+app.post('/relayer-selfcheck', relayerSelfcheckHandler);
+app.post('/api/relayer-selfcheck', relayerSelfcheckHandler);
 
 app.post('/api/upload', async (req, res) => {
   // Encrypted payload is received
